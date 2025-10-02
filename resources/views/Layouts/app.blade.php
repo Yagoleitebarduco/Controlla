@@ -20,22 +20,22 @@
             <h3>Painel</h3>
 
             <ul>
-                <li class="">
+                <li class="link-item {{ request()->routeIs('painel.index') ? 'active' : '' }}">
                     <img src="{{ asset('assets/svg/aside/home.svg') }}" alt="Icon Home">
                     <a href="{{ route('painel.index') }}">Dashboard</a>
                 </li>
 
-                <li class="">
+                <li class="link-item">
                     <img src="{{ asset('assets/svg/aside/relatorios.svg') }}" alt="Icon Relatorios">
                     <a href="#">Relatórios</a>
                 </li>
 
-                <li class="">
+                <li class="link-item">
                     <img src="{{ asset('assets/svg/aside/estoque.svg') }}" alt="Icon Estoque">
                     <a href="#">Estoque</a>
                 </li>
 
-                <li class="">
+                <li class="link-item">
                     <img src="{{ asset('assets/svg/aside/documentos.svg') }}" alt="Icon Documentos">
                     <a href="#">Documentos</a>
                 </li>
@@ -46,12 +46,12 @@
             <h3>Transação</h3>
 
             <ul>
-                <li class="">
+                <li class="link-item">
                     <img src="{{ asset('assets/svg/aside/transacao.svg') }}" alt="Icon Transação">
                     <a href="#">Registro de Transação</a>
                 </li>
 
-                <li class="">
+                <li class="link-item">
                     <img src="{{ asset('assets/svg/aside/recorrentes.svg') }}" alt="Icon Recorrentes">
                     <a href="#">Recorrentes</a>
                 </li>
@@ -62,12 +62,12 @@
             <h3>Conta</h3>
 
             <ul>
-                <li class="">
+                <li class="link-item">
                     <img src="{{ asset('assets/svg/aside/config.svg') }}" alt="Icon Configurações">
                     <a href="#">Configurações</a>
                 </li>
 
-                <li class="">
+                <li class="link-item">
                     <img src="{{ asset('assets/svg/aside/conta.svg') }}" alt="Icon Conta">
                     <a href="#">Conta</a>
                 </li>

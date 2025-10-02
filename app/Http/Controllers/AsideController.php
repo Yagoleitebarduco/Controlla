@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PainelController extends Controller
+class AsideController extends Controller
 {
-    public function index()
-    {
+    public function dashboard() {
         return view('painel.index');
     }
 }

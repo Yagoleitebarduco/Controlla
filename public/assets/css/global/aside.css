@@ -29,7 +29,7 @@ aside {
     letter-spacing: 1px;
 }
 
-.nav-item li {
+.link-item {
     padding: 12px 15px;
     margin-bottom: 8px;
     border-radius: 8px;
@@ -39,11 +39,11 @@ aside {
     transition: all 0.3s ease-in;
 }
 
-.nav-item li:hover {
+.link-item:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-.nav-item li.active {
+.active {
     background-color: rgba(255, 255, 255, 0.2);
     font-weight: 600;
 }
