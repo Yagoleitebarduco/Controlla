@@ -1,0 +1,149 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+hr {
+    margin: 25px 0;
+}
+
+.nav-dashboard {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
+
+.item-dashboard {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.item-dashboard:hover {
+    transform: translateY(-5px);
+}
+
+.item-dashboard a {
+    max-width: 100%;
+    color: black;
+}
+
+.info-flash {
+    display: flex;
+    justify-content: space-between; 
+    gap: 20px;
+}
+
+.info-dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--white);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    height: 200px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.info-dashboard:hover {
+    transform: translateY(-5px);
+}
+
+.title-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.title-info img {
+    padding: 10px;
+    background-color: var(--background-icon-info-dahboard);
+    border-radius: 5px;
+}
+
+.value-info h2 {
+    margin-bottom: 5px;
+}
+
+.value-info span {
+    color: var(--subTitle);
+}
+
+.content-dashboard {
+    width: 100%;
+    background-color: var(--white);
+    margin-top: 25px;
+    box-shadow: 0 0 15 rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-recentes {
+    margin-bottom: 25px;
+}
+
+.title-recentes h2 {
+    font-size: 1.3rem;
+}
+
+.table-recentes {
+    padding: 0 20px;
+}
+
+.table-recentes table{
+    display: flex;
+    flex-direction: column;
+}
+
+.table-recentes tr {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    text-align: center;
+}
+
+.sub {
+    color: var(--subTitle);
+}
+
+.table-recentes th,
+.table-recentes td {
+    flex: 1;
+}
+
+.corpo-tabela-recente {
+    margin-top: 14px;
+}
+
+.corpo-tabela-recente tr {
+    margin-bottom: 12px;
+}
+
+.corpo-tabela-recente td {
+    padding: 6px 8px;
+    border-radius: 10px;
+    width: 80px;
+}
+
+.debito {
+    background-color: var(--debito);
+    border: 2px solid var(--line-debito);
+}
+
+.credito {
+    background-color: var(--credito);
+    border: 2px solid var(--line-credito);
+}
+

@@ -1,0 +1,60 @@
+aside {
+    background: linear-gradient(to bottom, var(--background-aside-start), var(--background-aside-end));
+    width: 280px;
+    padding: 25px 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.title-aside {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 0 10px;
+    text-transform: uppercase;
+    color: var(--white);
+}
+
+.nav-item {
+    margin-bottom: 25px;
+}
+
+.nav-item h3 {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 15px;
+    padding: 0 10px;
+    letter-spacing: 1px;
+}
+
+.nav-item li {
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease-in;
+}
+
+.nav-item li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-item li.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+}
+
+.nav-item img {
+    width: 25px;
+    margin-right: 12px;
+    text-align: center;
+}
+
+.nav-item a {
+    color: var(--white);
+    font-size: 1.1rem;
+}

@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --background-body: #f5f7f9;
+
+    --white: #ffffff;
+    --black: #000000;
+    --debito: rgba(252, 32, 32, 0.5);
+    --line-debito: #a82424;
+    --credito: rgba(32, 252, 80, 0.502);
+    --line-credito: #287a3a;
+    --subTitle: #666666;
+
+    --background-aside-start:#2c3e50;
+    --background-aside-end: #3498db;
+
+    --background-icon-info-dahboard: rgba(4, 140, 231, 0.2);
+}
+
+
+body {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    background-color: var(--background-body);
+    overflow-x: hidden;
+}
+
+main {
+    padding: 30px;
+    flex: 1;
+}
+
+a {
+    text-decoration: none;
+    
+}
+
+ul {
+    list-style: none;
+}
