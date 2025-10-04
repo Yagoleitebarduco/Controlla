@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Controlla | @yield('title')</title>
+    <title>Controlla @yield('title')</title>
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 </head>
 
@@ -25,9 +25,9 @@
                     <a href="{{ route('painel.index') }}">Dashboard</a>
                 </li>
 
-                <li class="link-item">
+                <li class="link-item {{ request()->routeIs('relatorios.index') ? 'active' : '' }}">
                     <img src="{{ asset('assets/svg/aside/relatorios.svg') }}" alt="Icon Relatorios">
-                    <a href="#">Relatórios</a>
+                    <a href="{{ route('relatorios.index') }}">Relatórios</a>
                 </li>
 
                 <li class="link-item">

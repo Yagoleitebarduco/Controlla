@@ -1,0 +1,80 @@
+.filtro-relatorios {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-filtro-relatorios {
+    margin-bottom: 15px;
+}
+
+.title-filtro-relatorios h3 {
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.content-filtro-relatorios {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.item-filtro-relatorios {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex: 1;
+}
+
+.item-filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.item-filtro label {
+    color: var(--subTitle);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.item-filtro select {
+    height: 40px;
+    padding-left: 10px;
+    border: 2px solid var(--subTitle);
+    border-radius: 8px;
+}
+
+.item-filtro input {
+    height: 40px;
+    padding-left: 10px;
+    border: 2px solid var(--subTitle);
+    border-radius: 8px;
+}
+
+.buttons-filtro {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    gap: 8px;
+}
+
+.buttons-filtro button {
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.limpar-filtros {
+    background-color: var(--limpar-filtros);
+}
+
+.aplicar-filtros {
+    background-color: var(--aplicar-filtros);
+    color: var(--white);
+}

@@ -16,6 +16,9 @@
     --line-credito: #287a3a;
     --subTitle: #666666;
 
+    --limpar-filtros: #c2c2c2;
+    --aplicar-filtros: #699cd6;
+
     --background-aside-start:#2c3e50;
     --background-aside-end: #3498db;
 
@@ -43,4 +46,10 @@ a {
 
 ul {
     list-style: none;
+}
+
+button {
+    border: none;
+    box-shadow: none;
+    background: none;
 }
