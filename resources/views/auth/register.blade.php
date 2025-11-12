@@ -102,7 +102,7 @@
                 </div>
 
                 <!-- Formulário de Registro -->
-                <form class="mt-8 space-y-6" action="{{ route('register') }}" method="POST">
+                <form class="mt-8 space-y-6" method="POST" action="{{ route('register') }}">
                     @csrf
                     <!-- Campos em Grid (2 Colunas em telas maiores) -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
