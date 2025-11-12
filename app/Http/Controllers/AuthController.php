@@ -3,17 +3,42 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Container\Attributes\Auth;
 
 // Models
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public function showToFormLogin()
     {
         return view('auth.login');
+    }
+
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth()->attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/user');
+        }
+
+        return back()->withErrors([
+            'email' => 'Email Digitado esta Incorreto',
+            'password' => 'Senha Digitada esta Incorreto',
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('home');
     }
 
     public function showToFormRegister()
@@ -69,4 +94,5 @@ class AuthController extends Controller
 
         return redirect()->route('home');
     }
+
 }

@@ -26,7 +26,8 @@
 
 <body>
     <!-- Container Principal: Centraliza o formulário no meio da tela -->
-    <div class="min-h-screen flex items-center justify-center p-4 font-sans bg-linear-135 to-0% to-indigoDye from-100% from-prussianBlue">
+    <div
+        class="min-h-screen flex items-center justify-center p-4 font-sans bg-linear-135 to-0% to-indigoDye from-100% from-prussianBlue">
 
         <!-- Card de Login (Único) -->
         <div class="w-full max-w-md bg-white p-8 sm:p-10 rounded-xl shadow-2xl">
@@ -44,8 +45,8 @@
             </div>
 
             <!-- Formulário -->
-            <form class="mt-8 space-y-6" action="#" method="POST">
-
+            <form class="mt-8 space-y-6" action="{{ route('login') }}" method="POST">
+                @csrf
                 <!-- Campo de E-mail -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-prussianBlue">
@@ -55,6 +56,11 @@
                         <input id="email" name="email" type="email" autocomplete="email" required
                             class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-PaynesGray input-field sm:text-sm">
                     </div>
+                    @error('email')
+                        <div class="mt-2 text-sm text-red-600 bg-red-100 p-3 rounded-lg border border-red-400">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
 
                 <!-- Campo de Senha -->
@@ -66,6 +72,11 @@
                         <input id="password" name="password" type="password" autocomplete="current-password" required
                             class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-PaynesGray input-field sm:text-sm">
                     </div>
+                    @error('password')
+                        <div class="mt-2 text-sm text-red-600 bg-red-100 p-3 rounded-lg border border-red-400">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
 
                 <!-- Lembre-me e Esqueceu a Senha -->
