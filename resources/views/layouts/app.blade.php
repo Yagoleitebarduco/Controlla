@@ -22,6 +22,9 @@
             --color-PaynesGray: #4A6572;
             --color-indigoDye: #025373;
             --color-hookersGreen: #4B7368;
+            --color-dangerRed: #dc2626;
+            --color-hookersGreenLight: #EAF3F1;
+            --color-dangerRedLight: #FEEAEA;
         }
     </style>
     {{-- jQuery --}}
@@ -54,14 +57,14 @@
                     <div class="space-y-2">
                         <!-- Dashboard -->
                         <a href="{{ route('dashboard') }}"
-                            class="nav-link flex items-center p-3 rounded-lg font-medium {{ request()->routeIs('dashboard') ? 'bg-indigoDye shadow-md text-white' : 'text-gray-300' }}">
+                            class="nav-link flex items-center p-3 rounded-lg font-medium {{ request()->routeIs('dashboard') ? 'bg-indigoDye shadow-md text-white' : 'text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40' }}">
                             <i class="fas fa-gauge w-5 h-5 mr-3"></i>
                             Dashboard
                         </a>
 
                         <!-- Registro de Transação - AGORA SEM QUEBRA DE LINHA -->
-                        <a href="#"
-                            class="flex items-center p-3 rounded-lg text-gray-300 hover:text-white transition duration-200 whitespace-nowrap hover:bg-indigoDye/40">
+                        <a href="{{ route('registroTransacao') }}"
+                            class="flex items-center p-3 rounded-lg font-medium whitespace-nowrap {{ request()->routeIs('registroTransacao') ? 'bg-indigoDye shadow-md text-white' : 'text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40' }}">
                             <i class="fas fa-cash-register w-5 h-5 mr-3"></i>
                             Registro de Transação
                         </a>
@@ -118,7 +121,7 @@
                 <button id="menu-toggle" class="md:hidden text-prussianBlue focus:outline-none">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
-    
+
                 <!-- Título da Página (Repetível em todas as telas) -->
                 <h1 class="text-xl font-semibold text-richBlack hidden sm:block">
                     @yield('title')
@@ -126,7 +129,7 @@
 
                 <!-- Ações do Usuário (Notificações e Perfil/Saudação) -->
                 <div class="flex items-center space-x-4">
-                    
+
                     <!-- Notificações (Botão Redondo) -->
                     <button
                         class="flex items-center justify-center h-10 w-10 p-2 bg-gray-100 rounded-full text-PaynesGray hover:text-prussianBlue hover:bg-gray-200 transition duration-150 relative">

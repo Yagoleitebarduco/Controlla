@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RegistroTransaçãoController;
 
 // Rota da Home
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -22,5 +24,9 @@ Route::post('/register', [AuthController::class, 'register']);
 
 // Rotas de Acesso Autenticado
 Route::middleware('auth')->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/user/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+    // Tela de Registro de Transação
+    ## Rota de Registro de Transação
+    Route::get('/user/registroTransacao', [RegistroTransaçãoController::class, 'showToRegistroTransacao'])->name('registroTransacao');
 });
