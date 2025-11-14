@@ -49,25 +49,25 @@
             </div>
 
             <!-- Corpo do Formulário (Onde o Step 1 será exibido inicialmente) -->
-            <form class="space-y-6">
+            <form class="space-y-6" action="#" method="POST">
+                @csrf
                 <!-- NOVO: Seletor de Tipo de Transação (Receita ou Despesa) - Full Width -->
                 <div class="flex space-x-4 mb-8 text-center">
-
                     <!-- Receita Card/Button (Selected State - Fundo Semi-transparente Verde) -->
-                    <button type="button"
-                        class="flex-1 p-6 rounded-xl shadow-xl border-2 border-hookersGreen transition duration-300 
-                        bg-hookersGreenLight text-hookersGreen cursor-pointer">
+                    <a type="submit"
+                        class="flex-1 p-6 rounded-xl border-2 transition duration-300 shadow-xl cursor-pointer 
+                            border-hookersGreen bg-hookersGreenLight text-hookersGreen">
                         <i class="fas fa-arrow-up text-3xl mb-2" style="color: #4B7368"></i>
                         <p class="text-xl font-bold">Receita</p>
-                    </button>
+                    </a>
 
                     <!-- Despesa Card/Button (Unselected State with Red Hover) -->
-                    <button type="button"
+                    <a type="submit"
                         class="flex-1 p-6 rounded-xl shadow-md border-2 border-gray-200 transition duration-300 
-                        bg-white text-PaynesGray hover:border-dangerRed hover:shadow-xl hover:text-red hover:text-dangerRed hover:bg-dangerRedLight">
+                            bg-white text-PaynesGray hover:border-dangerRed hover:shadow-xl hover:text-red hover:text-dangerRed hover:bg-dangerRedLight">
                         <i class="fas fa-arrow-down text-3xl mb-2" style="color: #dc2626"></i>
                         <p class="text-xl font-bold">Despesa</p>
-                    </button>
+                    </a>
                 </div>
 
                 <!-- Coluna 1: Descrição e Valor -->
