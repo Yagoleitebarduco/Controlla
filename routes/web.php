@@ -29,4 +29,5 @@ Route::middleware('auth')->group(function () {
     // Tela de Registro de Transação
     ## Rota de Registro de Transação
     Route::get('/user/registroTransacao', [RegistroTransaçãoController::class, 'showToRegistroTransacao'])->name('registroTransacao');
+    Route::post('/user/registroTransacao', [RegistroTransaçãoController::class, 'store']);
 });

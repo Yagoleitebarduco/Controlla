@@ -49,25 +49,30 @@
             </div>
 
             <!-- Corpo do Formulário (Onde o Step 1 será exibido inicialmente) -->
-            <form class="space-y-6" action="#" method="POST">
+            <form class="space-y-6" action="{{ route('registroTransacao') }}" method="POST">
                 @csrf
                 <!-- NOVO: Seletor de Tipo de Transação (Receita ou Despesa) - Full Width -->
                 <div class="flex space-x-4 mb-8 text-center">
                     <!-- Receita Card/Button (Selected State - Fundo Semi-transparente Verde) -->
-                    <a type="submit"
-                        class="flex-1 p-6 rounded-xl border-2 transition duration-300 shadow-xl cursor-pointer 
-                            border-hookersGreen bg-hookersGreenLight text-hookersGreen">
+                    <button type="button" id="receitaStyle" onclick="selectTransaction('receita')"
+                        class="flex-1 p-6 rounded-xl shadow-md border-2 transition duration-300 cursor-pointer
+                            hover:border-hookersGreen hover:bg-hookersGreenLight hover:text-hookersGreen border-gray-200
+                        ">
+
                         <i class="fas fa-arrow-up text-3xl mb-2" style="color: #4B7368"></i>
                         <p class="text-xl font-bold">Receita</p>
-                    </a>
+                    </button>
 
                     <!-- Despesa Card/Button (Unselected State with Red Hover) -->
-                    <a type="submit"
-                        class="flex-1 p-6 rounded-xl shadow-md border-2 border-gray-200 transition duration-300 
-                            bg-white text-PaynesGray hover:border-dangerRed hover:shadow-xl hover:text-red hover:text-dangerRed hover:bg-dangerRedLight">
+                    <button type="button" id="despesaStyle" onclick="selectTransaction('despesa')"
+                        class="flex-1 p-6 rounded-xl shadow-md border-2 transition duration-300 cursor-pointer 
+                            hover:border-dangerRed hover:bg-dangerRedLight hover:text-dangerRed border-gray-200    
+                        ">
                         <i class="fas fa-arrow-down text-3xl mb-2" style="color: #dc2626"></i>
                         <p class="text-xl font-bold">Despesa</p>
-                    </a>
+                    </button>
+
+                    <input type="hidden" name="type_Transaction" id="Transaction" value="" required>
                 </div>
 
                 <!-- Coluna 1: Descrição e Valor -->
@@ -88,7 +93,7 @@
                         <label for="valor" class="block text-sm font-medium text-prussianBlue mb-1">
                             Valor (R$)
                         </label>
-                        <input id="valor" name="valor" type="number" inputmode="decimal" placeholder="0,00" required
+                        <input id="valor" name="valor" type="text" inputmode="decimal" placeholder="0,00" required
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base">
                     </div>
                 </div>
@@ -160,7 +165,144 @@
                         <i class="fas fa-arrow-right ml-2"></i>
                     </button>
                 </div>
+
+                <script>
+                    const class_active_receita = 'border-hookersGreen bg-hookersGreenLight text-hookersGreen ';
+                    const class_active_despesa = 'border-dangerRed bg-dangerRedLight text-dangerRed';
+                    const class_inactive = 'border-gray-200 text-PaynesGray';
+
+                    function selectTransaction(typeSelect) {
+                        const transactionInput = document.getElementById('Transaction');
+                        const btnReceita = document.getElementById('receitaStyle');
+                        const btnDespesa = document.getElementById('despesaStyle');
+
+                        transactionInput.value = typeSelect;
+
+                        if (typeSelect === 'receita') {
+                            btnReceita.className =
+                                `flex-1 p-6 rounded-xl shadow-md border-2 transition duration-300 cursor-pointer ${class_active_receita}`;
+                            btnDespesa.className =
+                                `flex-1 p-6 rounded-xl shadow-md border-2 transition duration-300 cursor-pointer ${class_inactive}`;
+                        } else if (typeSelect === 'despesa') {
+                            btnDespesa.className =
+                                `flex-1 p-6 rounded-xl shadow-md border-2 transition duration-300 cursor-pointer ${class_active_despesa}`;
+                            btnReceita.className =
+                                `flex-1 p-6 rounded-xl shadow-md border-2 transition duration-300 cursor-pointer ${class_inactive}`;
+                        }
+                    }
+
+                    $(document).ready(function() {
+                        // Aplica a máscara de moeda (padrão brasileiro R$ com separador de milhar e duas casas decimais)
+                        $('#valor').mask('000.000.000.000.000,00', {
+                            reverse: true, // Começa a aplicar a máscara do final (para valores monetários)
+                            placeholder: "0,00"
+                        });
+                    });
+                </script>
             </form>
+        </div>
+
+        <!-- NOVO: TABELA DE TRANSAÇÕES RECENTES -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mt-6">
+
+            <h3 class="text-xl font-semibold text-prussianBlue mb-4">Transações Recentes</h3>
+
+            <!-- Tabela Responsiva (Usando overflow-x-auto para mobile) -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 rounded-xl">
+                    <thead class="bg-gray-200 text-black">
+                        <tr>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-PaynesGray uppercase tracking-wider">
+                                Descrição
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-PaynesGray uppercase tracking-wider">
+                                Valor
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-PaynesGray uppercase tracking-wider">
+                                Data
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-PaynesGray uppercase tracking-wider">
+                                Categoria
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-PaynesGray uppercase tracking-wider">
+                                Forma de Pagamento
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-PaynesGray uppercase tracking-wider">
+                                Status
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <!-- Transação 1 (Receita Paga) -->
+                        @foreach ($transacoes as $transacao)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-prussianBlue">
+                                    {{ $transacao->descricao_Venda }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-success font-semibold">
+                                    @if ($transacao->type_Transaction == 'despesa')
+                                        - {{ $transacao->valor }}
+                                    @else
+                                        + {{ $transacao->valor }}
+                                    @endif
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
+                                    {{ $transacao->date_entrada }}
+                                </td>
+                                
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
+                                    {{ $transacao->categoria }}
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
+                                    {{ $transacao->type_pagament }}
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if ($transacao->status_Transacao == 'pago')
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-hookersGreen/50 text-black border border-hookersGreen uppercase">
+                                            {{ $transacao->status_Transacao }}
+                                        </span>
+                                    @endif
+
+                                    @if ($transacao->status_Transacao == 'pendente')
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-warning/10 text-warning uppercase">
+                                            {{ $transacao->status_Transacao }}
+                                        </span>
+                                    @endif
+
+                                    @if ($transacao->status_Transacao == 'cancelado')
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-dangerRed/30 text-black border border-dangerRed uppercase">
+                                            {{ $transacao->status_Transacao }}
+                                        </span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Botão "Ver Mais" -->
+            <div class="mt-6">
+                <a href="#"
+                    class="py-2 px-4 border border-indigoDye rounded-lg shadow-sm 
+                                   text-sm font-semibold text-indigoDye bg-white hover:bg-indigoDye hover:text-white 
+                                   transition duration-300 ease-in-out">
+                    Ver Mais Transações
+                </a>
+            </div>
         </div>
     </main>
 @endsection
