@@ -25,6 +25,7 @@
             --color-dangerRed: #dc2626;
             --color-hookersGreenLight: #EAF3F1;
             --color-dangerRedLight: #FEEAEA;
+            --color-warning: #F59E0B,
         }
     </style>
     {{-- jQuery --}}
