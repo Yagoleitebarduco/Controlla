@@ -65,7 +65,7 @@
 
                         <!-- Registro de Transação - AGORA SEM QUEBRA DE LINHA -->
                         <a href="{{ route('registerTransaction') }}"
-                            class="flex items-center p-3 rounded-lg font-medium whitespace-nowrap {{ request()->routeIs('registroTransacao') ? 'bg-indigoDye shadow-md text-white' : 'text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40' }}">
+                            class="flex items-center p-3 rounded-lg font-medium whitespace-nowrap {{ request()->routeIs('registerTransaction') ? 'bg-indigoDye shadow-md text-white' : 'text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40' }}">
                             <i class="fas fa-cash-register w-5 h-5 mr-3"></i>
                             Registro de Transação
                         </a>
@@ -75,8 +75,8 @@
                     <h3 class="text-xs uppercase text-gray-500 font-semibold mt-6 mb-2 px-3">Operações e Recursos</h3>
                     <div class="space-y-2">
                         <!-- Estoque -->
-                        <a href="#"
-                            class="nav-link flex items-center p-3 rounded-lg text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40">
+                        <a href="{{ route('stock') }}"
+                            class="nav-link flex items-center p-3 rounded-lg  {{ request()->routeIs('stock') ? 'bg-indigoDye shadow-md text-white' : 'text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40' }}">
                             <i class="fas fa-boxes-stacked w-5 h-5 mr-3"></i>
                             Estoque
                         </a>
@@ -124,13 +124,13 @@
                 </button>
 
                 <!-- Título da Página (Repetível em todas as telas) -->
-                <h1 class="text-xl font-semibold text-richBlack hidden sm:block">
+                <h1 class="text-xl font-semibold text-richBlack">
                     @yield('title')
                 </h1>
 
                 <!-- Ações do Usuário (Notificações e Perfil/Saudação) -->
                 <div class="flex items-center space-x-4">
-
+                    @yield('button-header')
                     <!-- Notificações (Botão Redondo) -->
                     <button
                         class="flex items-center justify-center h-10 w-10 p-2 bg-gray-100 rounded-full text-PaynesGray hover:text-prussianBlue hover:bg-gray-200 transition duration-150 relative">

@@ -93,7 +93,7 @@
                         <label for="value_transaction" class="block text-sm font-medium text-prussianBlue mb-1">
                             Valor (R$)
                         </label>
-                        <input id="value_transaction" name="value_transaction" type="text" inputmode="decimal"
+                        <input id="value_transaction" name="value_transaction" type="number" inputmode="decimal"
                             placeholder="0,00" required
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base">
                     </div>
@@ -189,14 +189,6 @@
                                 `flex-1 p-6 rounded-xl shadow-md border-2 transition duration-300 cursor-pointer ${class_inactive}`;
                         }
                     }
-
-                    $(document).ready(function() {
-                        // Aplica a máscara de moeda (padrão brasileiro R$ com separador de milhar e duas casas decimais)
-                        $('#value_transaction').mask('000.000.000.000.000,00', {
-                            reverse: true, // Começa a aplicar a máscara do final (para valores monetários)
-                            placeholder: "0,00"
-                        });
-                    });
                 </script>
             </form>
         </div>
@@ -281,21 +273,21 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if ($transactionMade->status_transaction == 'Pago')
                                         <span
-                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-hookersGreen/50 text-black border border-hookersGreen uppercase">
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full uppercase bg-green-300">
                                             {{ $transactionMade->status_transaction }}
                                         </span>
                                     @endif
 
                                     @if ($transactionMade->status_transaction == 'Pendente')
                                         <span
-                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-warning/10 text-warning uppercase">
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full uppercase bg-amber-300">
                                             {{ $transactionMade->status_transaction }}
                                         </span>
                                     @endif
 
                                     @if ($transactionMade->status_transaction == 'Cancelado')
                                         <span
-                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-dangerRed/30 text-black border border-dangerRed uppercase">
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full uppercase bg-red-300">
                                             {{ $transactionMade->status_transaction }}
                                         </span>
                                     @endif

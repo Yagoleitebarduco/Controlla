@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('TypeTransaction_id')->constrained('type_transactions')->onDelete('cascade');
             $table->text('description_sale');
-            $table->string('value_transaction');
+            $table->decimal('value_transaction', 8, 2);
             $table->date('entry_date');
             $table->foreignId('Category_id')->constrained('categories')->onDelete('cascade');
             $table->foreignId('TypePayment_id')->constrained('type_payments')->onDelete('cascade');

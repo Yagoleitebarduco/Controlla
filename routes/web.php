@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegisterTransactionController;
+use App\Http\Controllers\StockController;
 
 // Rota da Home
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -30,4 +31,11 @@ Route::middleware('auth')->group(function () {
     ## Rota de Registro de Transação
     Route::get('/user/registerTransaction', [RegisterTransactionController::class, 'showToRegisterTransaction'])->name('registerTransaction');
     Route::post('/user/registerTransaction', [RegisterTransactionController::class, 'store']);
+
+    // Tela de Estoque
+    ## Rota da Tela de Estoque
+    Route::get('/user/stock', [StockController::class, 'showToStock'])->name('stock');
+    ## Rota da Tela de Criar Item para Estoque
+    Route::get('/user/stock/create', [StockController::class, 'showToCreateItemStock'])->name('create.stock');
+    Route::post('/user/stock/create', [StockController::class, 'store']);
 });
