@@ -49,12 +49,12 @@
             </div>
 
             <!-- Corpo do Formulário (Onde o Step 1 será exibido inicialmente) -->
-            <form class="space-y-6" action="{{ route('registroTransacao') }}" method="POST">
+            <form class="space-y-6" action="{{ route('registerTransaction') }}" method="POST">
                 @csrf
                 <!-- NOVO: Seletor de Tipo de Transação (Receita ou Despesa) - Full Width -->
                 <div class="flex space-x-4 mb-8 text-center">
                     <!-- Receita Card/Button (Selected State - Fundo Semi-transparente Verde) -->
-                    <button type="button" id="receitaStyle" onclick="selectTransaction('receita')"
+                    <button type="button" id="receitaStyle" onclick="selectTransaction('receita', 1)"
                         class="flex-1 p-6 rounded-xl shadow-md border-2 transition duration-300 cursor-pointer
                             hover:border-hookersGreen hover:bg-hookersGreenLight hover:text-hookersGreen border-gray-200
                         ">
@@ -64,7 +64,7 @@
                     </button>
 
                     <!-- Despesa Card/Button (Unselected State with Red Hover) -->
-                    <button type="button" id="despesaStyle" onclick="selectTransaction('despesa')"
+                    <button type="button" id="despesaStyle" onclick="selectTransaction('despesa', 2)"
                         class="flex-1 p-6 rounded-xl shadow-md border-2 transition duration-300 cursor-pointer 
                             hover:border-dangerRed hover:bg-dangerRedLight hover:text-dangerRed border-gray-200    
                         ">
@@ -72,7 +72,7 @@
                         <p class="text-xl font-bold">Despesa</p>
                     </button>
 
-                    <input type="hidden" name="type_Transaction" id="Transaction" value="" required>
+                    <input type="hidden" name="TypeTransaction_id" id="TypeTransaction_id" value="" required>
                 </div>
 
                 <!-- Coluna 1: Descrição e Valor -->
@@ -80,20 +80,21 @@
 
                     <!-- Descrição da Venda -->
                     <div>
-                        <label for="descricao" class="block text-sm font-medium text-prussianBlue mb-1">
+                        <label for="description_sale" class="block text-sm font-medium text-prussianBlue mb-1">
                             Descrição da Venda/Transação
                         </label>
-                        <input id="descricao" name="descricao" type="text" placeholder="Ex: Venda de Produtos Julho"
-                            required
+                        <input id="description_sale" name="description_sale" type="text"
+                            placeholder="Ex: Venda de Produtos Julho" required
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base">
                     </div>
 
                     <!-- Valor -->
                     <div>
-                        <label for="valor" class="block text-sm font-medium text-prussianBlue mb-1">
+                        <label for="value_transaction" class="block text-sm font-medium text-prussianBlue mb-1">
                             Valor (R$)
                         </label>
-                        <input id="valor" name="valor" type="text" inputmode="decimal" placeholder="0,00" required
+                        <input id="value_transaction" name="value_transaction" type="text" inputmode="decimal"
+                            placeholder="0,00" required
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base">
                     </div>
                 </div>
@@ -103,55 +104,53 @@
 
                     <!-- Data de Entrada -->
                     <div>
-                        <label for="data_entrada" class="block text-sm font-medium text-prussianBlue mb-1">
+                        <label for="entry_date" class="block text-sm font-medium text-prussianBlue mb-1">
                             Data de Entrada
                         </label>
-                        <input id="data_entrada" name="data_entrada" type="date" required
+                        <input id="entry_date" name="entry_date" type="date" required
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base">
                     </div>
 
                     <!-- Categoria -->
                     <div>
-                        <label for="categoria" class="block text-sm font-medium text-prussianBlue mb-1">
+                        <label for="Category_id" class="block text-sm font-medium text-prussianBlue mb-1">
                             Categoria
                         </label>
-                        <select id="categoria" name="categoria" required
+                        <select id="Category_id" name="Category_id" required
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base bg-white">
-                            <option value="">Selecione a Categoria</option>
-                            <option value="venda_servico">Venda de Serviço</option>
-                            <option value="venda_produto">Venda de Produto</option>
-                            <option value="investimento">Investimento</option>
-                            <option value="outros">Outros</option>
+                            <option selected class="hidden">Selecione a Categoria</option>
+                            @foreach ($categories as $categorie)
+                                <option value="{{ $categorie->id }}">{{ $categorie->category }}</option>
+                            @endforeach
                         </select>
                     </div>
 
                     <!-- Forma de Pagamento -->
                     <div>
-                        <label for="forma_pagamento" class="block text-sm font-medium text-prussianBlue mb-1">
+                        <label for="TypePayment_id" class="block text-sm font-medium text-prussianBlue mb-1">
                             Forma de Pagamento
                         </label>
-                        <select id="forma_pagamento" name="forma_pagamento" required
+                        <select id="TypePayment_id" name="TypePayment_id" required
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base bg-white">
-                            <option value="">Selecione a Forma</option>
-                            <option value="pix">PIX</option>
-                            <option value="cartao">Cartão de Crédito/Débito</option>
-                            <option value="dinheiro">Dinheiro</option>
-                            <option value="boleto">Boleto</option>
+                            <option selected class="hidden">Selecione a Forma de Pagamento</option>
+                            @foreach ($payments as $payment)
+                                <option value="{{ $payment->id }}">{{ $payment->payment }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
 
                 <!-- Coluna 3: Status (Full Width) -->
                 <div>
-                    <label for="status" class="block text-sm font-medium text-prussianBlue mb-1">
+                    <label for="status_transaction" class="block text-sm font-medium text-prussianBlue mb-1">
                         Status da Transação
                     </label>
-                    <select id="status" name="status" required
+                    <select id="status_transaction" name="status_transaction" required
                         class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base bg-white">
-                        <option value="">Selecione o Status</option>
-                        <option value="pago">Pago/Concluído</option>
-                        <option value="pendente">Pendente</option>
-                        <option value="cancelado">Cancelado</option>
+                        <option selected class="hidden">Selecione a Status de Transação</option>
+                        <option value="Pago">Pago</option>
+                        <option value="Pendente">Pendente</option>
+                        <option value="Cancelado">Cancelado</option>
                     </select>
                 </div>
 
@@ -159,8 +158,8 @@
                 <div class="pt-4 flex justify-end">
                     <button type="submit"
                         class="flex items-center py-3 px-6 border border-transparent rounded-lg shadow-lg 
-                                           text-lg font-semibold text-white bg-indigoDye hover:bg-prussianBlue 
-                                           transition duration-300 ease-in-out transform hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigoDye">
+                            text-lg font-semibold text-white bg-indigoDye hover:bg-prussianBlue 
+                            transition duration-300 ease-in-out transform hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigoDye">
                         Próximo Passo
                         <i class="fas fa-arrow-right ml-2"></i>
                     </button>
@@ -171,19 +170,19 @@
                     const class_active_despesa = 'border-dangerRed bg-dangerRedLight text-dangerRed';
                     const class_inactive = 'border-gray-200 text-PaynesGray';
 
-                    function selectTransaction(typeSelect) {
-                        const transactionInput = document.getElementById('Transaction');
+                    function selectTransaction(typeSelect, typeId) {
+                        const transactionInput = document.getElementById('TypeTransaction_id');
                         const btnReceita = document.getElementById('receitaStyle');
                         const btnDespesa = document.getElementById('despesaStyle');
 
-                        transactionInput.value = typeSelect;
-
                         if (typeSelect === 'receita') {
+                            transactionInput.value = typeId;
                             btnReceita.className =
                                 `flex-1 p-6 rounded-xl shadow-md border-2 transition duration-300 cursor-pointer ${class_active_receita}`;
                             btnDespesa.className =
                                 `flex-1 p-6 rounded-xl shadow-md border-2 transition duration-300 cursor-pointer ${class_inactive}`;
                         } else if (typeSelect === 'despesa') {
+                            transactionInput.value = typeId;
                             btnDespesa.className =
                                 `flex-1 p-6 rounded-xl shadow-md border-2 transition duration-300 cursor-pointer ${class_active_despesa}`;
                             btnReceita.className =
@@ -193,7 +192,7 @@
 
                     $(document).ready(function() {
                         // Aplica a máscara de moeda (padrão brasileiro R$ com separador de milhar e duas casas decimais)
-                        $('#valor').mask('000.000.000.000.000,00', {
+                        $('#value_transaction').mask('000.000.000.000.000,00', {
                             reverse: true, // Começa a aplicar a máscara do final (para valores monetários)
                             placeholder: "0,00"
                         });
@@ -215,6 +214,10 @@
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-PaynesGray uppercase tracking-wider">
                                 Descrição
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-PaynesGray uppercase tracking-wider">
+                                Tipo de transação
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-PaynesGray uppercase tracking-wider">
@@ -241,50 +244,59 @@
 
                     <tbody class="bg-white divide-y divide-gray-200">
                         <!-- Transação 1 (Receita Paga) -->
-                        @foreach ($transacoes as $transacao)
+                        @foreach ($transactionsMade as $transactionMade)
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-prussianBlue">
-                                    {{ $transacao->descricao_Venda }}
+                                <td class="px-6 py-4 whitespace-nowrap text-[16px] font-medium text-prussianBlue">
+                                    {{ $transactionMade->description_sale }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-success font-semibold">
-                                    @if ($transacao->type_Transaction == 'despesa')
-                                        - {{ $transacao->valor }}
+                                
+                                <td class="px-6 py-4 whitespace-nowrap text-[16px] font-medium text-prussianBlue">
+                                    {{ $transactionMade->TypeTransaction->transaction }}
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap text-success font-semibold">
+                                    @if ($transactionMade->TypeTransaction_id == 1)
+                                        <span class="text-green-500">
+                                            + {{ $transactionMade->value_transaction }}
+                                        </span>
                                     @else
-                                        + {{ $transacao->valor }}
+                                        <span class="text-red-500">
+                                            - {{ $transactionMade->value_transaction }}
+                                        </span>
                                     @endif
                                 </td>
 
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
-                                    {{ $transacao->date_entrada }}
-                                </td>
-                                
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
-                                    {{ $transacao->categoria }}
+                                <td class="px-6 py-4 whitespace-nowrap text-[16px] text-PaynesGray">
+                                    {{ $transactionMade->entry_date }}
                                 </td>
 
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
-                                    {{ $transacao->type_pagament }}
+                                <td class="px-6 py-4 whitespace-nowrap text-[16px] text-PaynesGray">
+                                    {{ $transactionMade->Category->category }}
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap text-[16px] text-PaynesGray">
+                                    {{ $transactionMade->TypePayment->payment }}
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    @if ($transacao->status_Transacao == 'pago')
+                                    @if ($transactionMade->status_transaction == 'Pago')
                                         <span
                                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-hookersGreen/50 text-black border border-hookersGreen uppercase">
-                                            {{ $transacao->status_Transacao }}
+                                            {{ $transactionMade->status_transaction }}
                                         </span>
                                     @endif
 
-                                    @if ($transacao->status_Transacao == 'pendente')
+                                    @if ($transactionMade->status_transaction == 'Pendente')
                                         <span
                                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-warning/10 text-warning uppercase">
-                                            {{ $transacao->status_Transacao }}
+                                            {{ $transactionMade->status_transaction }}
                                         </span>
                                     @endif
 
-                                    @if ($transacao->status_Transacao == 'cancelado')
+                                    @if ($transactionMade->status_transaction == 'Cancelado')
                                         <span
                                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-dangerRed/30 text-black border border-dangerRed uppercase">
-                                            {{ $transacao->status_Transacao }}
+                                            {{ $transactionMade->status_transaction }}
                                         </span>
                                     @endif
                                 </td>

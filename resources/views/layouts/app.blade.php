@@ -64,7 +64,7 @@
                         </a>
 
                         <!-- Registro de Transação - AGORA SEM QUEBRA DE LINHA -->
-                        <a href="{{ route('registroTransacao') }}"
+                        <a href="{{ route('registerTransaction') }}"
                             class="flex items-center p-3 rounded-lg font-medium whitespace-nowrap {{ request()->routeIs('registroTransacao') ? 'bg-indigoDye shadow-md text-white' : 'text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40' }}">
                             <i class="fas fa-cash-register w-5 h-5 mr-3"></i>
                             Registro de Transação

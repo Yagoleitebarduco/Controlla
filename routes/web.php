@@ -8,7 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RegistroTransaçãoController;
+use App\Http\Controllers\RegisterTransactionController;
 
 // Rota da Home
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -28,6 +28,6 @@ Route::middleware('auth')->group(function () {
 
     // Tela de Registro de Transação
     ## Rota de Registro de Transação
-    Route::get('/user/registroTransacao', [RegistroTransaçãoController::class, 'showToRegistroTransacao'])->name('registroTransacao');
-    Route::post('/user/registroTransacao', [RegistroTransaçãoController::class, 'store']);
+    Route::get('/user/registerTransaction', [RegisterTransactionController::class, 'showToRegisterTransaction'])->name('registerTransaction');
+    Route::post('/user/registerTransaction', [RegisterTransactionController::class, 'store']);
 });
