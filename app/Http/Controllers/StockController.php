@@ -12,7 +12,10 @@ class StockController extends Controller
     public function showToStock()
     {
         $products = Stock::all();
-        return view('admin.estoque.estoque', compact('products'));
+        $totalProducts = Stock::count();
+        $addedValue = Stock::sum('unit_value');
+        $belowMinimun = Stock::whereColumn('max_stock', '<', 'min_stock')->count();
+        return view('admin.estoque.estoque', compact('products', 'totalProducts', 'addedValue', 'belowMinimun'));
     }
 
     public function showToCreateItemStock()
@@ -47,5 +50,31 @@ class StockController extends Controller
         Stock::create($data);
 
         return redirect()->route('stock');
+    }
+
+    public function showToEditStock(Stock $product)
+    {
+        $categories = Category::where('type_category', 2)->get();
+        return view('admin.estoque.edit', compact('product', 'categories'));
+    }
+
+    public function update(Request $request, Stock $product)
+    {
+        $formatterValue = $request->input('unit_value');
+        $valueThousands = str_replace('.', '', $formatterValue);
+        $finalValue = str_replace(',', '.', $valueThousands);
+        $convertedValue = (float) $finalValue;
+
+        $data = $request->all();
+        $data['unit_value'] = $convertedValue;
+
+        $product->update($data);
+        return redirect()->route('stock');
+    }
+
+    public function destroy(Stock $product)
+    {
+        $product->delete();
+        return redirect()->route('stock');   
     }
 }

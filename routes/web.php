@@ -38,4 +38,9 @@ Route::middleware('auth')->group(function () {
     ## Rota da Tela de Criar Item para Estoque
     Route::get('/user/stock/create', [StockController::class, 'showToCreateItemStock'])->name('create.stock');
     Route::post('/user/stock/create', [StockController::class, 'store']);
+    ## Rota par Editar item no Estoque
+    Route::get('/user/stock/{product}/edit', [StockController::class, 'showToEditStock'])->name('edit.stock');
+    Route::put('/user/stock/{product}', [StockController::class, 'update'])->name('update.stock');
+    ## Rota de Deletar Item
+    Route::delete('/user/stock/{product}', [StockController::class, 'destroy'])->name('delete.stock');
 });

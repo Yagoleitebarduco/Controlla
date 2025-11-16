@@ -34,7 +34,7 @@
                 <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-indigoDye flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-PaynesGray uppercase">Produtos em Estoque</p>
-                        <p class="text-3xl font-bold text-richBlack mt-1">1.250</p>
+                        <p class="text-3xl font-bold text-richBlack mt-1">{{ $totalProducts }}</p>
                     </div>
                     <i class="fas fa-boxes-stacked text-4xl text-indigoDye/60"></i>
                 </div>
@@ -44,7 +44,7 @@
                     class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-prussianBlue flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-PaynesGray uppercase">Valor Total em Produtos</p>
-                        <p class="text-3xl font-bold text-richBlack mt-1">R$ 55.780,50</p>
+                        <p class="text-3xl font-bold text-richBlack mt-1">R$ {{ $addedValue }}</p>
                     </div>
                     <i class="fas fa-tags text-4xl text-prussianBlue/60"></i>
                 </div>
@@ -53,7 +53,7 @@
                 <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-danger flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-PaynesGray uppercase">Produtos em Falta</p>
-                        <p class="text-3xl font-bold text-richBlack mt-1">8</p>
+                        <p class="text-3xl font-bold text-richBlack mt-1">{{ $belowMinimun }}</p>
                     </div>
                     <i class="fas fa-triangle-exclamation text-4xl text-danger/60"></i>
                 </div>
@@ -113,23 +113,38 @@
                                     <td class="px-6 text-center py-4 whitespace-nowrap text-sm text-PaynesGray ">
                                         {{ $product->Category->category }}
                                     </td>
-                                    <td
-                                        class="px-6 text-center py-4 whitespace-nowrap text-sm text-richBlack font-semibold">
-                                        {{ $product->max_stock }} {{ $product->unit_measure }}
-                                    </td>
+                                    @if ($product->max_stock < $product->min_stock)
+                                        <td
+                                            class="px-6 text-center py-4 whitespace-nowrap text-sm font-semibold text-red-500">
+                                            {{ $product->max_stock }} {{ $product->unit_measure }}
+                                        </td>
+                                    @else
+                                        <td
+                                            class="px-6 text-center py-4 whitespace-nowrap text-sm font-semibold text-green-500">
+                                            {{ $product->max_stock }} {{ $product->unit_measure }}
+                                        </td>
+                                    @endif
                                     <td class="px-6 text-center py-4 whitespace-nowrap text-sm text-PaynesGray">
                                         {{ $product->min_stock }} {{ $product->unit_measure }}
                                     </td>
                                     <td class="px-6 text-center py-4 whitespace-nowrap text-sm text-richBlack">
                                         R$ {{ $product->unit_value }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-2">
-                                        <button class="text-indigoDye hover:text-prussianBlue transition duration-150">
+                                    <td class="flex px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-2 justify-center">
+                                        <a href="{{ route('edit.stock', $product) }}"
+                                            class="text-indigoDye hover:text-prussianBlue transition duration-150 cursor-pointer">
                                             <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="text-danger hover:text-dangerRed transition duration-150">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
+                                        </a>
+
+                                        <form action="{{ route('delete.stock', $product) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit" class="inline-block hover:text-red-500 transition duration-300"
+                                                class="text-danger hover:text-dangerRed transition duration-150 cursor-pointer">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

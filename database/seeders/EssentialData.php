@@ -28,7 +28,7 @@ class EssentialData extends Seeder
             ['type_category' => 1, 'category' => 'Venda de Serviço'],
             ['type_category' => 1, 'category' => 'Venda de Produto'],
             ['type_category' => 1, 'category' => 'Outros'],
-            ['type_category' => 2, 'category' => 'inssumos'],
+            ['type_category' => 2, 'category' => 'Insumos '],
             ['type_category' => 2, 'category' => 'Sementes'],
             ['type_category' => 2, 'category' => 'Bebidas'],
         ]);

@@ -19,8 +19,10 @@
         <!-- Card Principal do Formulário -->
         <div class="bg-white rounded-xl shadow-lg p-6 lg:p-8 mx-auto">
 
-            <form class="space-y-6" action="{{ route('create.stock') }}" method="POST">
+            <form class="space-y-6" action="{{ route('update.stock', $product) }}" method="POST">
                 @csrf
+                @method('PUT')
+
                 <!-- Seção 1: Informações Básicas (Duas Colunas) -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-b pb-6">
 
@@ -29,13 +31,8 @@
                         <label for="cod" class="block text-sm font-medium text-prussianBlue mb-1">
                             Código do Produto
                         </label>
-                        <input id="cod" name="cod" type="text" placeholder="Ex: P-101" required
+                        <input id="cod" name="cod" type="text" placeholder="Ex: P-101" required value="{{ $product->cod }}"
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base">
-                        @error('cod')
-                            <div class="mt-2 text-sm text-red-600 bg-red-100 p-3 rounded-lg border border-red-400">
-                                {{ $message }}
-                            </div>
-                        @enderror
                     </div>
 
                     <!-- Nome do Produto -->
@@ -44,7 +41,7 @@
                             Nome do Produto
                         </label>
                         <input id="name_product" name="name_product" type="text" placeholder="Ex: Kit Bateria de Lítio"
-                            required
+                            required value="{{ $product->name_product }}"
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base">
                     </div>
 
@@ -55,9 +52,11 @@
                         </label>
                         <select id="category" name="Category_id" required
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base bg-white">
-                            <option class="hidden" selected>Selecione a Categoria</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->category }}</option>
+                                <option value="{{ $category->id }}" {{ $product->Category_id == $category->id ? 'selected' : '' }}>
+                                    
+                                    {{ $category->category }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -66,7 +65,7 @@
                         <label for="unit_measure" class="block text-sm font-medium text-prussianBlue mb-1">
                             Qual a Unidade de Medida (EX: Kg, L, G)
                         </label>
-                        <input id="unit_measure" name="unit_measure" type="text" required
+                        <input id="unit_measure" name="unit_measure" type="text" required value="{{ $product->unit_measure }}"
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base">
                     </div>
                 </div>
@@ -80,7 +79,7 @@
                             Valor Unitário (R$)
                         </label>
                         <input id="unit_value" name="unit_value" type="text" inputmode="decimal" placeholder="0,00"
-                            required
+                            required value="{{ $product->unit_value }}"
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base">
                     </div>
 
@@ -90,7 +89,7 @@
                             Estoque Mínimo
                         </label>
                         <input id="min_stock" name="min_stock" type="number" inputmode="numeric" placeholder="Ex: 10"
-                            required
+                            required value="{{ $product->min_stock }}"
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base">
                     </div>
 
@@ -100,6 +99,7 @@
                             Estoque Total
                         </label>
                         <input id="max_stock" name="max_stock" type="number" inputmode="numeric" placeholder="Ex: 50"
+                            value="{{ $product->max_stock }}"
                             class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-PaynesGray input-field sm:text-base">
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                             text-lg font-semibold text-white bg-hookersGreen hover:bg-prussianBlue 
                             transition duration-300 ease-in-out transform hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hookersGreen">
                         <i class="fas fa-save mr-2"></i>
-                        Cadastrar Produto
+                        Salvar Produto
                     </button>
                 </div>
 

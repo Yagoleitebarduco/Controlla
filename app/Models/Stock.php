@@ -14,7 +14,6 @@ class Stock extends Model
         'unit_measure',
         'min_stock',
         'max_stock',
-        'description',
     ];
 
     public function category()

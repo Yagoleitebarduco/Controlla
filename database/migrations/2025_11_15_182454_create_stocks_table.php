@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('unit_measure');
             $table->bigInteger('min_stock');
             $table->bigInteger('max_stock');
-            $table->text('description');
             $table->timestamps();
         });
     }
