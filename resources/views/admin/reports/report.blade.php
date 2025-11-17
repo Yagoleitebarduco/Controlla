@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title-page')
-    - relatorios
+    - Relatorios
 @endsection
 
 @section('title')
@@ -8,7 +8,7 @@
 @endsection
 @section('button-header')
     <!-- Botão Gerar Novo Relatório (No Header para acesso rápido em desktop) -->
-    <a href="#"
+    <a href="{{ route('reports.generate') }}"
         class="hidden sm:flex items-center py-2 px-4 border border-transparent rounded-lg shadow-md 
                         text-sm font-semibold text-white bg-indigoDye hover:bg-prussianBlue 
                         transition duration-150 ease-in-out whitespace-nowrap">
@@ -28,7 +28,7 @@
             </div>
 
             <!-- Botão Gerar Novo Relatório (Para Mobile - oculto em sm+) -->
-            <a href="#"
+            <a href="{{ route('reports.generate') }}"
                 class="sm:hidden flex items-center py-2 px-3 border border-transparent rounded-lg shadow-md 
                         text-sm font-semibold text-white bg-indigoDye hover:bg-prussianBlue 
                         transition duration-150 ease-in-out whitespace-nowrap">
@@ -75,7 +75,7 @@
                         <!-- Relatório 1 -->
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-prussianBlue">
-                                Demonstração de Resultados
+                                Demonstração de Resultados Financeiros
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
                                 Financeiro
@@ -84,7 +84,7 @@
                                 Jul/2024 - Ago/2024
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-richBlack">
-                                26/08/2024
+                                {{ now()->subMonths(3)->format('d/m/Y') }} <!-- Exemplo de data passada -->
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span
@@ -97,41 +97,78 @@
                                     title="Visualizar">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="text-hookersGreen hover:text-prussianBlue transition duration-150"
+                                <!-- Link funcional para download do tipo 'financial_statement' -->
+                                <a href="{{ route('reports.download', ['report_type' => 'financial_statement']) }}"
+                                    class="text-hookersGreen hover:text-prussianBlue transition duration-150"
                                     title="Download PDF">
                                     <i class="fas fa-download"></i>
-                                </button>
+                                </a>
                             </td>
                         </tr>
                         <!-- Relatório 2 -->
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-prussianBlue">
-                                Inventário Atualizado
+                                Inventário Atualizado de Estoque
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
                                 Estoque
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
-                                Data: 20/09/2024
+                                Data: {{ now()->subDays(10)->format('d/m/Y') }} <!-- Exemplo de data passada -->
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-richBlack">
-                                20/09/2024
+                                {{ now()->subDays(10)->format('d/m/Y') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-warning/10 text-warning">
-                                    Processando
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-success/10 text-success">
+                                    Concluído
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-3">
-                                <button class="text-indigoDye opacity-50 cursor-not-allowed" disabled
-                                    title="Visualizar (Processando)">
+                                <button class="text-indigoDye hover:text-prussianBlue transition duration-150"
+                                    title="Visualizar">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="text-hookersGreen opacity-50 cursor-not-allowed" disabled
-                                    title="Download PDF (Processando)">
+                                <!-- Link funcional para download do tipo 'stock_inventory' -->
+                                <a href="{{ route('reports.download', ['report_type' => 'stock_inventory']) }}"
+                                    class="text-hookersGreen hover:text-prussianBlue transition duration-150"
+                                    title="Download PDF">
                                     <i class="fas fa-download"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <!-- Relatório 3 -->
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-prussianBlue">
+                                Relatório de Vendas Mensal
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
+                                Vendas
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
+                                Out/2024
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-richBlack">
+                                {{ now()->subMonth()->format('d/m/Y') }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-success/10 text-success">
+                                    Concluído
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-3">
+                                <button class="text-indigoDye hover:text-prussianBlue transition duration-150"
+                                    title="Visualizar">
+                                    <i class="fas fa-eye"></i>
                                 </button>
+                                <!-- Link funcional para download de um novo tipo (exemplo) -->
+                                <a href="{{ route('reports.download', ['report_type' => 'sales_report']) }}"
+                                    class="text-hookersGreen hover:text-prussianBlue transition duration-150"
+                                    title="Download PDF">
+                                    <i class="fas fa-download"></i>
+                                </a>
                             </td>
                         </tr>
                     </tbody>
@@ -140,3 +177,12 @@
         </div>
     </main>
 @endsection
+
+@push('scripts')
+    <!-- Se você tiver outros scripts, coloque-os aqui -->
+    <!-- Script para download funcional (opcional, se quiser manter o JS anterior) -->
+    <script>
+        // Seu script anterior pode ser mantido aqui se necessário
+        // Porém, agora os links são diretamente funcionais via Blade
+    </script>
+@endpush
