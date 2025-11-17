@@ -20,4 +20,11 @@ class Stock extends Model
     {
         return $this->belongsTo(Category::class, 'Category_id');
     }
+
+    public function transactions()
+    {
+        return $this->belongsToMany(RegisterTransaction::class, 'stock_transaction')
+                    ->withPivot('quantity', 'value_transaction')
+                    ->withTimestamps();
+    }
 }

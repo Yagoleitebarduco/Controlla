@@ -34,4 +34,11 @@ class RegisterTransaction extends Model
     {
         return $this->belongsTo(TypePayment::class, 'TypePayment_id');
     }
+
+    public function stocks()
+    {
+        return $this->belongsToMany(Stock::class, 'stock_transaction')
+                    ->withPivot('quantity', 'value_transaction')
+                    ->withTimestamps();
+    }
 }
