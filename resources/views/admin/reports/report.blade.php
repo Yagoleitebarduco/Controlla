@@ -72,105 +72,47 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <!-- Relatório 1 -->
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-prussianBlue">
-                                Demonstração de Resultados Financeiros
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
-                                Financeiro
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
-                                Jul/2024 - Ago/2024
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-richBlack">
-                                {{ now()->subMonths(3)->format('d/m/Y') }} <!-- Exemplo de data passada -->
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-success/10 text-success">
-                                    Concluído
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-3">
-                                <button class="text-indigoDye hover:text-prussianBlue transition duration-150"
-                                    title="Visualizar">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <!-- Link funcional para download do tipo 'financial_statement' -->
-                                <a href="{{ route('reports.download', ['report_type' => 'financial_statement']) }}"
-                                    class="text-hookersGreen hover:text-prussianBlue transition duration-150"
-                                    title="Download PDF">
-                                    <i class="fas fa-download"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <!-- Relatório 2 -->
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-prussianBlue">
-                                Inventário Atualizado de Estoque
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
-                                Estoque
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
-                                Data: {{ now()->subDays(10)->format('d/m/Y') }} <!-- Exemplo de data passada -->
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-richBlack">
-                                {{ now()->subDays(10)->format('d/m/Y') }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-success/10 text-success">
-                                    Concluído
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-3">
-                                <button class="text-indigoDye hover:text-prussianBlue transition duration-150"
-                                    title="Visualizar">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <!-- Link funcional para download do tipo 'stock_inventory' -->
-                                <a href="{{ route('reports.download', ['report_type' => 'stock_inventory']) }}"
-                                    class="text-hookersGreen hover:text-prussianBlue transition duration-150"
-                                    title="Download PDF">
-                                    <i class="fas fa-download"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <!-- Relatório 3 -->
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-prussianBlue">
-                                Relatório de Vendas Mensal
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
-                                Vendas
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
-                                Out/2024
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-richBlack">
-                                {{ now()->subMonth()->format('d/m/Y') }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-success/10 text-success">
-                                    Concluído
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-3">
-                                <button class="text-indigoDye hover:text-prussianBlue transition duration-150"
-                                    title="Visualizar">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <!-- Link funcional para download de um novo tipo (exemplo) -->
-                                <a href="{{ route('reports.download', ['report_type' => 'sales_report']) }}"
-                                    class="text-hookersGreen hover:text-prussianBlue transition duration-150"
-                                    title="Download PDF">
-                                    <i class="fas fa-download"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        @forelse($reports as $report)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-prussianBlue">
+                                    {{ $report->title }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
+                                    {{ ucfirst(str_replace('_', ' ', $report->type)) }} {{-- Formata o tipo --}}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-PaynesGray">
+                                    <!-- Exemplo de período, você pode melhorar isso no futuro -->
+                                    Data: {{ $report->generated_at->format('d/m/Y') }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-richBlack">
+                                    {{ $report->generated_at->format('d/m/Y H:i') }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-success/10 text-success">
+                                        Concluído
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-3">
+                                    <button class="text-indigoDye hover:text-prussianBlue transition duration-150"
+                                        title="Visualizar">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <!-- Link funcional para download baseado no tipo salvo no banco -->
+                                    <a href="{{ route('reports.download', ['report_type' => $report->type]) }}"
+                                        class="text-hookersGreen hover:text-prussianBlue transition duration-150"
+                                        title="Download PDF">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="px-6 py-4 text-center text-sm text-PaynesGray">
+                                    Nenhum relatório gerado ainda.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

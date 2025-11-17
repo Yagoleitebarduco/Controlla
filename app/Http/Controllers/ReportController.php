@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Stock; // <<< Substitua 'Product' por 'Stock'
 use App\Models\RegisterTransaction; // <<< Substitua 'Transaction' por 'RegisterTransaction'
+use App\Models\Report; // <<< Adicione esta linha
+
 
 class ReportController extends Controller
 {
@@ -14,8 +16,11 @@ class ReportController extends Controller
      */
     public function index()
     {
-        // Caminho alterado para onde o arquivo realmente está
-        return view('admin.reports.report');
+        // Busca os relatórios do banco de dados, ordenados pela data de geração (mais recentes primeiro)
+        $reports = Report::orderBy('generated_at', 'desc')->get();
+
+        // Passa os relatórios para a view
+        return view('admin.reports.report', compact('reports'));
     }
 
     /**
@@ -27,8 +32,8 @@ class ReportController extends Controller
         return view('admin.reports.generate');
     }
 
-    /**
-     * Gera o PDF com base no tipo selecionado.
+       /**
+     * Gera o PDF com base no tipo selecionado e salva no histórico.
      */
     public function download(Request $request)
     {
@@ -38,7 +43,6 @@ class ReportController extends Controller
 
         $type = $request->input('report_type');
 
-        // Obter dados reais do banco com base no tipo
         $data = [
             'title' => $this->getReportTitle($type),
             'date_generated' => now()->format('d/m/Y H:i'),
@@ -48,6 +52,13 @@ class ReportController extends Controller
         // Caminho alterado para onde o arquivo realmente está
         $pdf = Pdf::loadView('admin.reports.pdf_template', $data);
         $filename = "relatorio_{$type}_" . now()->format('Ymd_His') . ".pdf";
+
+        // Salva o registro do relatório no banco de dados
+        Report::create([
+            'type' => $type,
+            'title' => $data['title'],
+            'filename' => $filename,
+        ]);
 
         return $pdf->download($filename);
     }
