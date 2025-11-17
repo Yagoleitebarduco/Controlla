@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('relatorios')->name('reports.')->group(function () {
         Route::get('/', [ReportController::class, 'index'])->name('index');
         Route::get('/gerar', [ReportController::class, 'generate'])->name('generate');
-        Route::post('/baixar', [ReportController::class, 'download'])->name('download');
+        Route::get('/baixar', [ReportController::class, 'download'])->name('download');
     });
 
     // Tela de Usuario
