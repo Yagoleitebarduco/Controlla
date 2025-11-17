@@ -103,8 +103,8 @@
 
                 <!-- Seção Inferior: Perfil/Usuário - AGORA COM FUNDO MAIS ESCURO E ÍCONE BRANCO -->
                 <div class="p-4 bg-richBlack">
-                    <a href="#"
-                        class="nav-link flex items-center p-3 rounded-lg text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40">
+                    <a href="{{ route('user.profile') }}"
+                        class="nav-link flex items-center p-3 rounded-lg  {{ request()->routeIs('user.profile') ? 'bg-indigoDye shadow-md text-white' : 'text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40' }}">
                         <i class="fas fa-user w-5 h-5 mr-3 text-white"></i>
                         Perfil
                     </a>
@@ -141,7 +141,7 @@
                     </button>
 
                     <!-- Saudação e Nome do Usuário (NOVO ELEMENTO) -->
-                    <a href="#" class="text-right flex items-center group cursor-pointer">
+                    <a href="{{ route('user.profile') }}" class="text-right flex items-center group cursor-pointer">
                         <div class="hidden sm:block">
                             <p class="text-sm font-medium text-black transition duration-150">
                                 Olá, <span class="text-prussianBlue hover:text-indigoDye">{{ Auth::user()->name }}
@@ -151,10 +151,6 @@
                         </div>
                         <!-- Avatar de Perfil Pequeno (Opcional, para complementar a saudação) -->
                         @if (Auth::user()->photo == null)
-                            <div
-                                class="ml-3 flex items-center justify-center h-10 w-10 bg-indigoDye rounded-full text-white font-bold text-sm shrink-0 uppercase">
-                                yg
-                            </div>
                         @else
                             <div
                                 class="ml-3 flex items-center justify-center h-10 w-10 bg-indigoDye rounded-full text-white font-bold text-sm shrink-0">

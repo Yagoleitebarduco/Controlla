@@ -41,7 +41,7 @@
 
                 <!-- Card 2: Valor Total em Produtos -->
                 <div
-                    class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-prussianBlue flex items-center justify-between">
+                    class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500 flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-PaynesGray uppercase">Valor Total em Produtos</p>
                         <p class="text-3xl font-bold text-richBlack mt-1">R$ {{ $addedValue }}</p>
@@ -50,7 +50,7 @@
                 </div>
 
                 <!-- Card 3: Produtos em Falta (Alerta) -->
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-danger flex items-center justify-between">
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-500 flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-PaynesGray uppercase">Produtos em Falta</p>
                         <p class="text-3xl font-bold text-richBlack mt-1">{{ $belowMinimun }}</p>

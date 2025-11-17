@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegisterTransactionController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\UserController;
 
 // Rota da Home
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -43,4 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/user/stock/{product}', [StockController::class, 'update'])->name('update.stock');
     ## Rota de Deletar Item
     Route::delete('/user/stock/{product}', [StockController::class, 'destroy'])->name('delete.stock');
+
+    // Tela de Usuario
+    Route::get('/user/userProfile', [UserController::class, 'showToUser'])->name('user.profile');
 });
