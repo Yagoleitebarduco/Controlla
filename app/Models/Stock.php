@@ -20,9 +20,7 @@ class Stock extends Model
     {
         return $this->belongsTo(Category::class, 'Category_id');
     }
-<<<<<<< HEAD
     
-=======
 
     public function transactions()
     {
@@ -30,5 +28,5 @@ class Stock extends Model
                     ->withPivot('quantity', 'value_transaction')
                     ->withTimestamps();
     }
->>>>>>> d581b674f845499e6c96e58dab6b4b605f15a1fd
+
 }
