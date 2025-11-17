@@ -23,6 +23,29 @@ class ReportController extends Controller
         return view('admin.reports.report', compact('reports'));
     }
 
+        /**
+     * Exibe o PDF no navegador (em uma nova aba).
+     */
+    public function view($id)
+    {
+        // Busca o relatório pelo ID
+        $report = Report::findOrFail($id);
+
+        // Caminho completo do arquivo PDF (assumindo que os PDFs são salvos na pasta public/storage/reports/)
+        $filePath = storage_path('app/public/reports/' . $report->filename);
+
+        // Verifica se o arquivo existe
+        if (!file_exists($filePath)) {
+            abort(404, 'Arquivo PDF não encontrado.');
+        }
+
+        // Retorna o PDF como resposta inline (exibe no navegador)
+        return response()->file($filePath, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $report->filename . '"',
+        ]);
+    }
+
     /**
      * Mostra a tela de geração de relatórios.
      */
@@ -50,8 +73,12 @@ class ReportController extends Controller
         ];
 
         // Caminho alterado para onde o arquivo realmente está
-        $pdf = Pdf::loadView('admin.reports.pdf_template', $data);
+               $pdf = Pdf::loadView('admin.reports.pdf_template', $data);
         $filename = "relatorio_{$type}_" . now()->format('Ymd_His') . ".pdf";
+
+        // Salva o PDF no disco (em storage/app/public/reports/)
+        $path = 'reports/' . $filename;
+        $pdf->save(storage_path('app/public/' . $path));
 
         // Salva o registro do relatório no banco de dados
         Report::create([
@@ -60,9 +87,9 @@ class ReportController extends Controller
             'filename' => $filename,
         ]);
 
+        // Envia para download (como antes)
         return $pdf->download($filename);
     }
-
     /**
      * Obtém o título do relatório com base no tipo.
      */
