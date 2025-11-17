@@ -98,7 +98,6 @@
                             Relatórios
                         </a>
                     </div>
-
                 </nav>
 
                 <!-- Seção Inferior: Perfil/Usuário - AGORA COM FUNDO MAIS ESCURO E ÍCONE BRANCO -->
@@ -131,6 +130,7 @@
                 <!-- Ações do Usuário (Notificações e Perfil/Saudação) -->
                 <div class="flex items-center space-x-4">
                     @yield('button-header')
+
                     <!-- Notificações (Botão Redondo) -->
                     <button
                         class="flex items-center justify-center h-10 w-10 p-2 bg-gray-100 rounded-full text-PaynesGray hover:text-prussianBlue hover:bg-gray-200 transition duration-150 relative">
