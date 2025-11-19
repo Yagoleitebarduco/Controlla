@@ -133,7 +133,7 @@ case 'financial_statement':
             case 'sales_report':
                 // Exemplo: Busca transações de tipo 'Receita' (TypeTransaction_id = 1)
                 // Supondo que o Model Transaction tenha: description_sale, value_transaction
-                $salesTransactions = Transaction::where('TypeTransaction_id', 1)->get(); // Ajuste o ID conforme sua tabela TypeTransaction
+                $salesTransactions = RegisterTransaction::where('TypeTransaction_id', 1)->get(); // Ajuste o ID conforme sua tabela TypeTransaction
                 $data = [];
                 foreach ($salesTransactions as $sale) {
                     $data[] = [

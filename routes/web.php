@@ -44,7 +44,10 @@ Route::middleware('auth')->group(function () {
     Route::prefix('relatorios')->name('reports.')->group(function () {
         Route::get('/', [ReportController::class, 'index'])->name('index');
         Route::get('/gerar', [ReportController::class, 'generate'])->name('generate');
+
         Route::POST('/baixar', [ReportController::class, 'download'])->name('download');
+        Route::post('/baixar', [ReportController::class, 'download'])->name('download');
+
         Route::get('/visualizar/{id}', [ReportController::class, 'view'])->name('view');
     });
 
