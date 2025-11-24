@@ -60,7 +60,7 @@
                         <a href="{{ route('dashboard') }}"
                             class="nav-link flex items-center p-3 rounded-lg font-medium {{ request()->routeIs('dashboard') ? 'bg-indigoDye shadow-md text-white' : 'text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40' }}">
                             <i class="fas fa-gauge w-5 h-5 mr-3"></i>
-                            Dashboard
+                            Painel Principal
                         </a>
 
                         <!-- Registro de Transação - AGORA SEM QUEBRA DE LINHA -->
