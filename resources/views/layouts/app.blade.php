@@ -81,7 +81,7 @@
                             Estoque
                         </a>
                         <!-- Documentos -->
-                        <a href="#"
+                        <a href="{{ route('documents.index') }}"
                             class="nav-link flex items-center p-3 rounded-lg text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40">
                             <i class="fas fa-folder w-5 h-5 mr-3"></i>
                             Documentos
