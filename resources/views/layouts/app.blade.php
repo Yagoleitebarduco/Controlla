@@ -92,8 +92,10 @@
                     <h3 class="text-xs uppercase text-gray-500 font-semibold mt-6 mb-2 px-3">Análise</h3>
                     <div class="space-y-2">
                         <!-- Relatórios -->
-                        <a href="#"
-                            class="nav-link flex items-center p-3 rounded-lg text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40">
+                        <!-- Relatórios -->
+                        <!-- Relatórios -->
+                        <a href="{{ route('reports.index') }}" {{-- <<< Link atualizado --}}
+                            class="nav-link flex items-center p-3 rounded-lg {{ request()->routeIs('reports.*') ? 'bg-indigoDye shadow-md text-white' : 'text-gray-300 hover:text-white transition duration-200 hover:bg-indigoDye/40' }}"> {{-- <<< Classe condicional atualizada --}}
                             <i class="fas fa-chart-line w-5 h-5 mr-3"></i>
                             Relatórios
                         </a>

@@ -9,4 +9,9 @@ class TypeTransaction extends Model
     protected $fillable = [
         'transaction'
     ];
+
+    public function TypeTransaction()
+{
+    return $this->belongsTo(TypeTransaction::class, 'TypeTransaction_id');
+}
 }
