@@ -23,6 +23,16 @@ class EssentialData extends Seeder
             'email' => 'yago.g4c@gmail.com',
             'password' => Hash::make('1234'),
         ]);
+        
+        DB::table('users')->insert([
+            'name' => 'João',
+            'lastname' => 'Paulo',
+            'cpf' => '409.356.099-01',
+            'phone' => '(13) 99463-0451',
+            'date_nasc' => '2007-04-08',
+            'email' => 'joao@gmail.com',
+            'password' => Hash::make('1234'),
+        ]);
 
         DB::table('categories')->insert([
             ['type_category' => 1, 'category' => 'Venda de Serviço'],
