@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegisterTransactionController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ReportController; // <<< Importação obrigatória
 
 // Rota da Home
@@ -40,11 +41,20 @@ Route::middleware('auth')->group(function () {
     Route::put('/user/stock/{product}', [StockController::class, 'update'])->name('update.stock');
     Route::delete('/user/stock/{product}', [StockController::class, 'destroy'])->name('delete.stock');
 
+
+
+    // Rota Documentos
+    Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');
+    Route::post('/documents', [DocumentController::class, 'store'])->name('documents.store');
+
     // Tela de Relatórios (CORRIGIDA)
     Route::prefix('relatorios')->name('reports.')->group(function () {
         Route::get('/', [ReportController::class, 'index'])->name('index');
         Route::get('/gerar', [ReportController::class, 'generate'])->name('generate');
+
+        Route::POST('/baixar', [ReportController::class, 'download'])->name('download');
         Route::post('/baixar', [ReportController::class, 'download'])->name('download');
+
         Route::get('/visualizar/{id}', [ReportController::class, 'view'])->name('view');
     });
 
