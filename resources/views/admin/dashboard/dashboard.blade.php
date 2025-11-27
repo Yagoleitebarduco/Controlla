@@ -87,7 +87,7 @@
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-semibold text-prussianBlue">Transações Recentes</h3>
                 <!-- Botão de Adição ("+") -->
-                <a href="#"
+                <a href="{{ route('registerTransaction') }}"
                     class="flex items-center justify-center h-10 w-10 rounded-full bg-hookersGreen text-white shadow-md hover:bg-prussianBlue transition duration-150"
                     title="Nova Transação">
                     <i class="fas fa-plus text-lg"></i>

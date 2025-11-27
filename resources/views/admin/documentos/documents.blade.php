@@ -92,7 +92,7 @@
             <div
                 class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-200">
                 <div class="flex justify-between items-start mb-3">
-                    <i class="fas fa-file-pdf text-3xl text-danger flex-shrink-0"></i>
+                    <i class="fas fa-file-pdf text-3xl text-danger shrink-0"></i>
                     <span class="text-xs text-PaynesGray">1.2 MB</span>
                 </div>
                 <h4 class="text-sm font-semibold text-prussianBlue truncate mb-1" title="Contrato Fornecedor Alpha">
@@ -120,7 +120,7 @@
             <div
                 class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-200">
                 <div class="flex justify-between items-start mb-3">
-                    <i class="fas fa-file-image text-3xl text-warning flex-shrink-0"></i>
+                    <i class="fas fa-file-image text-3xl text-warning shrink-0"></i>
                     <span class="text-xs text-PaynesGray">450 KB</span>
                 </div>
                 <h4 class="text-sm font-semibold text-prussianBlue truncate mb-1" title="Nota Fiscal Compra 0012">
@@ -148,7 +148,7 @@
             <div
                 class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-200">
                 <div class="flex justify-between items-start mb-3">
-                    <i class="fas fa-file-excel text-3xl text-success flex-shrink-0"></i>
+                    <i class="fas fa-file-excel text-3xl text-success shrink-0"></i>
                     <span class="text-xs text-PaynesGray">80 KB</span>
                 </div>
                 <h4 class="text-sm font-semibold text-prussianBlue truncate mb-1" title="Balanço Mensal Setembro">
@@ -176,7 +176,7 @@
             <div
                 class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-200">
                 <div class="flex justify-between items-start mb-3">
-                    <i class="fas fa-file-contract text-3xl text-indigoDye flex-shrink-0"></i>
+                    <i class="fas fa-file-contract text-3xl text-indigoDye shrink-0"></i>
                     <span class="text-xs text-PaynesGray">2.5 MB</span>
                 </div>
                 <h4 class="text-sm font-semibold text-prussianBlue truncate mb-1" title="Contrato Cliente Beta">
@@ -204,7 +204,7 @@
             <div
                 class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-200">
                 <div class="flex justify-between items-start mb-3">
-                    <i class="fas fa-file-alt text-3xl text-PaynesGray flex-shrink-0"></i>
+                    <i class="fas fa-file-alt text-3xl text-PaynesGray shrink-0"></i>
                     <span class="text-xs text-PaynesGray">500 KB</span>
                 </div>
                 <h4 class="text-sm font-semibold text-prussianBlue truncate mb-1" title="Manual de Uso Interno">

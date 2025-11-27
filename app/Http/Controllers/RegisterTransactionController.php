@@ -23,11 +23,19 @@ class RegisterTransactionController extends Controller
 
     public function store(Request $request)
     {
+        $$formatterValue = $request->input('value_transaction');
+        $valueThousands = str_replace('.', '', $$formatterValue);
+        $finalValue = str_replace(',', '.', $valueThousands);
+        $convertedValue = (float) $finalValue;
+
         $request->validate([
             'TypeTransaction_id' => 'required',
         ]);
 
-        RegisterTransaction::create($request->all());
+        $data = $request->all();
+        $data['value_transaction'] = $convertedValue;
+
+        RegisterTransaction::create($data);
 
         // RegisterTransaction::create([
         //     'TypeTransaction_id' => $request->TypeTransaction_id,
