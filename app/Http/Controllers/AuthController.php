@@ -64,7 +64,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('home');
+        return redirect()->route('login');
     }
 
     // Função de Rota da Pagina de Login de Usuario

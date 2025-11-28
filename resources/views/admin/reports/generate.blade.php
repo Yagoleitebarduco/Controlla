@@ -46,9 +46,9 @@
                     </label>
                     <select name="report_type" id="report_type"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigoDye focus:border-transparent">
-                        <option value="">Selecione um tipo...</option>
-                        <option value="stock_inventory">Inventário de Estoque</option>
-                        <option value="financial_statement">Demonstração Financeira</option>
+                        <option class="hidden" selected>Selecione um tipo...</option>
+                        <option value="stock_inventory">Relatorio de Estoque</option>
+                        <option value="financial_statement">Relatorio Financeiro</option>
                     </select>
                 </div>
 

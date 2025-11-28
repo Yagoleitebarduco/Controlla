@@ -27,11 +27,6 @@
             <p class="text-3xl font-bold text-richBlack mt-1">R$ 3.120,00</p>
         </div>
         <!-- Card 3 -->
-        <div class="bg-white p-5 rounded-xl shadow-lg border-l-4 border-prussianBlue">
-            <p class="text-sm font-medium text-PaynesGray uppercase">Lucro</p>
-            <p class="text-3xl font-bold text-richBlack mt-1">R$ 12.330,00</p>
-        </div>
-        <!-- Card 4 -->
         <div class="bg-white p-5 rounded-xl shadow-lg border-l-4 border-hookersGreen">
             <p class="text-sm font-medium text-PaynesGray uppercase">Estoque Baixo</p>
             <p class="text-3xl font-bold text-richBlack mt-1">12 Itens</p>
