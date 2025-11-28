@@ -50,12 +50,10 @@
                 <i class="fas fa-boxes-stacked text-2xl text-hookersGreen/80"></i>
             </div>
         </div>
-<<<<<<< HEAD
         <!-- Card 3 -->
         <div class="bg-white p-5 rounded-xl shadow-lg border-l-4 border-hookersGreen">
             <p class="text-sm font-medium text-PaynesGray uppercase">Estoque Baixo</p>
             <p class="text-3xl font-bold text-richBlack mt-1">12 Itens</p>
-=======
 
         <!-- 2. GRÁFICOS (Desempenho Mensal e Distribuição) -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
@@ -209,7 +207,6 @@
                     </tbody>
                 </table>
             </div>
->>>>>>> 2245c7d0d20ef4e42ebd06a5af3f436b06eef751
         </div>
     </main>
 @endsection
