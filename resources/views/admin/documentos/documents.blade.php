@@ -1,6 +1,25 @@
 @extends('layouts.app')
 
+@section('title-page')
+    - Documentos
+@endsection
+
+@section('title')
+    Gerenciamento de Arquivos
+@endsection
+
+@section('button-header')
+    <!-- Botão Novo Documento (Visível em SM+ ) -->
+    <label for="file-upload-input" class="hidden sm:flex items-center py-2 px-4 border border-transparent rounded-lg shadow-md
+                        text-sm font-semibold text-white bg-hookersGreen hover:bg-prussianBlue
+                        transition duration-150 ease-in-out whitespace-nowrap cursor-pointer">
+        <i class="fas fa-file-circle-plus mr-2"></i>
+        Novo Documento
+    </label>
+@endsection
+
 <!-- Área de Conteúdo Principal -->
+@section('content')
 <main class="flex-1 overflow-x-hidden overflow-y-auto p-6">
 
     <div class="mb-6 flex justify-between items-center">
@@ -10,11 +29,11 @@
         </div>
 
         <!-- Botão Novo Documento (Para Mobile - oculto em sm+) -->
-        <a href="#" class="sm:hidden flex items-center py-2 px-3 border border-transparent rounded-lg shadow-md
+        <label for="file-upload-input" class="sm:hidden flex items-center py-2 px-3 border border-transparent rounded-lg shadow-md
                         text-sm font-semibold text-white bg-hookersGreen hover:bg-prussianBlue
-                        transition duration-150 ease-in-out whitespace-nowrap">
+                        transition duration-150 ease-in-out whitespace-nowrap cursor-pointer">
             <i class="fas fa-file-circle-plus mr-1"></i> Novo
-        </a>
+        </label>
     </div>
 
     <!-- NOVO: CARDS DE MÉTRICAS DE DOCUMENTOS -->
@@ -24,7 +43,7 @@
         <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-indigoDye flex items-center justify-between">
             <div>
                 <p class="text-sm font-medium text-PaynesGray uppercase">Total de Documentos</p>
-                <p class="text-3xl font-bold text-richBlack mt-1">128</p>
+                <p class="text-3xl font-bold text-richBlack mt-1">{{ count($documents) }}</p>
             </div>
             <i class="fas fa-file-invoice text-4xl text-indigoDye/60"></i>
         </div>
@@ -33,16 +52,16 @@
         <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-hookersGreen flex items-center justify-between">
             <div>
                 <p class="text-sm font-medium text-PaynesGray uppercase">Armazenamento Utilizado</p>
-                <p class="text-3xl font-bold text-richBlack mt-1">5.2 GB</p>
+                <p class="text-3xl font-bold text-richBlack mt-1">{{ $totalSizeFormatted }}</p>
             </div>
             <i class="fas fa-database text-4xl text-hookersGreen/60"></i>
         </div>
 
-        <!-- Card 3: Documentos Pendentes -->
+        <!-- Card 3: Documentos Recentemente Adicionados -->
         <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-warning flex items-center justify-between">
             <div>
-                <p class="text-sm font-medium text-PaynesGray uppercase">Documentos Pendentes</p>
-                <p class="text-3xl font-bold text-richBlack mt-1">4</p>
+                <p class="text-sm font-medium text-PaynesGray uppercase">Novos Este Mês</p>
+                <p class="text-3xl font-bold text-richBlack mt-1">{{ $newThisMonth }}</p>
             </div>
             <i class="fas fa-hourglass-half text-4xl text-warning/60"></i>
         </div>
@@ -52,7 +71,8 @@
     <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data" id="document-upload-form"
         class="bg-white rounded-xl shadow-lg p-8 mb-6 drag-drop-area flex flex-col items-center justify-center text-center border-2 border-dashed border-gray-300 hover:border-indigoDye transition duration-300">
 
-        @csrf <input type="file" multiple name="files[]" id="file-upload-input" class="hidden"
+        @csrf
+        <input type="file" multiple name="files[]" id="file-upload-input" class="hidden"
             accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx">
 
         <i class="fas fa-cloud-arrow-up text-5xl text-PaynesGray mb-4" id="upload-icon"></i>
@@ -77,9 +97,12 @@
         @if(session('success'))
             <p class="text-sm text-hookersGreen mt-3">{{ session('success') }}</p>
         @endif
+
+        @if(session('error'))
+            <p class="text-sm text-danger mt-3">{{ session('error') }}</p>
+        @endif
+
     </form>
-
-
 
     <!-- Card Principal: LISTA DE DOCUMENTOS EM CARDS -->
     <div class="bg-white rounded-xl shadow-lg p-6">
@@ -88,224 +111,101 @@
         <!-- Grid de Cards (4 por linha em telas grandes) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-            <!-- Card Documento 1 (PDF) -->
-            <div
-                class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-200">
+            @forelse($documents as $doc)
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-200">
                 <div class="flex justify-between items-start mb-3">
-                    <i class="fas fa-file-pdf text-3xl text-danger shrink-0"></i>
-                    <span class="text-xs text-PaynesGray">1.2 MB</span>
+                    <i class="fas {{ $doc->icon }} text-3xl shrink-0"></i>
+                    <span class="text-xs text-PaynesGray">{{ $doc->formatted_size }}</span>
                 </div>
-                <h4 class="text-sm font-semibold text-prussianBlue truncate mb-1" title="Contrato Fornecedor Alpha">
-                    Contrato Fornecedor Alpha
+                <h4 class="text-sm font-semibold text-prussianBlue truncate mb-1" title="{{ $doc->original_name }}">
+                    {{ Str::limit(pathinfo($doc->original_name, PATHINFO_FILENAME), 20) }}
                 </h4>
                 <p class="text-xs text-PaynesGray mb-3">
-                    Contrato | 15/07/2024
+                    {{ strtoupper($doc->extension) }} | {{ $doc->created_at->format('d/m/Y') }}
                 </p>
 
                 <!-- Ações -->
                 <div class="flex justify-end space-x-3 border-t pt-3">
-                    <button class="text-indigoDye hover:text-prussianBlue transition duration-150" title="Visualizar">
+                    <a href="{{ $doc->url }}" target="_blank" class="text-indigoDye hover:text-prussianBlue transition duration-150" title="Visualizar">
                         <i class="fas fa-eye"></i>
-                    </button>
-                    <button class="text-hookersGreen hover:text-prussianBlue transition duration-150" title="Download">
+                    </a>
+                    <a href="{{ $doc->url }}" download="{{ $doc->original_name }}" class="text-hookersGreen hover:text-prussianBlue transition duration-150" title="Download">
                         <i class="fas fa-download"></i>
-                    </button>
-                    <button class="text-danger hover:text-dangerRed transition duration-150" title="Excluir">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
+                    </a>
+                    <!-- Botão de Exclusão -->
+                    <form action="{{ route('documents.destroy', $doc) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" 
+                            class="text-danger hover:text-dangerRed transition duration-150" 
+                            title="Excluir"
+                            onclick="return confirm('Tem certeza que deseja excluir este documento?')">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
-
-            <!-- Card Documento 2 (Imagem - Nota Fiscal) -->
-            <div
-                class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-200">
-                <div class="flex justify-between items-start mb-3">
-                    <i class="fas fa-file-image text-3xl text-warning shrink-0"></i>
-                    <span class="text-xs text-PaynesGray">450 KB</span>
-                </div>
-                <h4 class="text-sm font-semibold text-prussianBlue truncate mb-1" title="Nota Fiscal Compra 0012">
-                    Nota Fiscal Compra 0012
-                </h4>
-                <p class="text-xs text-PaynesGray mb-3">
-                    Nota Fiscal | 20/09/2024
-                </p>
-
-                <!-- Ações -->
-                <div class="flex justify-end space-x-3 border-t pt-3">
-                    <button class="text-indigoDye hover:text-prussianBlue transition duration-150" title="Visualizar">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                    <button class="text-hookersGreen hover:text-prussianBlue transition duration-150" title="Download">
-                        <i class="fas fa-download"></i>
-                    </button>
-                    <button class="text-danger hover:text-dangerRed transition duration-150" title="Excluir">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
+            @empty
+            <div class="col-span-4 text-center py-8 text-PaynesGray">
+                Nenhum documento foi enviado ainda.
             </div>
-
-            <!-- Card Documento 3 (Planilha - Financeiro) -->
-            <div
-                class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-200">
-                <div class="flex justify-between items-start mb-3">
-                    <i class="fas fa-file-excel text-3xl text-success shrink-0"></i>
-                    <span class="text-xs text-PaynesGray">80 KB</span>
-                </div>
-                <h4 class="text-sm font-semibold text-prussianBlue truncate mb-1" title="Balanço Mensal Setembro">
-                    Balanço Mensal Setembro
-                </h4>
-                <p class="text-xs text-PaynesGray mb-3">
-                    Planilha | 30/09/2024
-                </p>
-
-                <!-- Ações -->
-                <div class="flex justify-end space-x-3 border-t pt-3">
-                    <button class="text-indigoDye hover:text-prussianBlue transition duration-150" title="Visualizar">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                    <button class="text-hookersGreen hover:text-prussianBlue transition duration-150" title="Download">
-                        <i class="fas fa-download"></i>
-                    </button>
-                    <button class="text-danger hover:text-dangerRed transition duration-150" title="Excluir">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Card Documento 4 (Contrato) -->
-            <div
-                class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-200">
-                <div class="flex justify-between items-start mb-3">
-                    <i class="fas fa-file-contract text-3xl text-indigoDye shrink-0"></i>
-                    <span class="text-xs text-PaynesGray">2.5 MB</span>
-                </div>
-                <h4 class="text-sm font-semibold text-prussianBlue truncate mb-1" title="Contrato Cliente Beta">
-                    Contrato Cliente Beta
-                </h4>
-                <p class="text-xs text-PaynesGray mb-3">
-                    Contrato | 01/10/2024
-                </p>
-
-                <!-- Ações -->
-                <div class="flex justify-end space-x-3 border-t pt-3">
-                    <button class="text-indigoDye hover:text-prussianBlue transition duration-150" title="Visualizar">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                    <button class="text-hookersGreen hover:text-prussianBlue transition duration-150" title="Download">
-                        <i class="fas fa-download"></i>
-                    </button>
-                    <button class="text-danger hover:text-dangerRed transition duration-150" title="Excluir">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Card Documento 5 (Outro) -->
-            <div
-                class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-200">
-                <div class="flex justify-between items-start mb-3">
-                    <i class="fas fa-file-alt text-3xl text-PaynesGray shrink-0"></i>
-                    <span class="text-xs text-PaynesGray">500 KB</span>
-                </div>
-                <h4 class="text-sm font-semibold text-prussianBlue truncate mb-1" title="Manual de Uso Interno">
-                    Manual de Uso Interno
-                </h4>
-                <p class="text-xs text-PaynesGray mb-3">
-                    Manual | 10/10/2024
-                </p>
-
-                <!-- Ações -->
-                <div class="flex justify-end space-x-3 border-t pt-3">
-                    <button class="text-indigoDye hover:text-prussianBlue transition duration-150" title="Visualizar">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                    <button class="text-hookersGreen hover:text-prussianBlue transition duration-150" title="Download">
-                        <i class="fas fa-download"></i>
-                    </button>
-                    <button class="text-danger hover:text-dangerRed transition duration-150" title="Excluir">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
-            </div>
+            @endforelse
 
         </div>
 
-        <!-- Botão Ver Mais (AGORA ALINHADO À ESQUERDA) -->
-        <div class="mt-8 flex justify-start"> <!-- Adicionado 'flex justify-start' -->
-            <a href="#" class="py-2 px-6 border border-indigoDye rounded-lg shadow-sm
-                                   text-sm font-semibold text-indigoDye bg-white hover:bg-indigoDye hover:text-white
-                                   transition duration-300 ease-in-out flex items-center max-w-xs">
-                <!-- Removido mx-auto e justify-center -->
-                <i class="fas fa-chevron-down mr-2"></i>
-                Ver Mais Documentos
-            </a>
-        </div>
     </div>
 
+</main>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dropArea = document.getElementById('document-upload-form');
+    const fileInput = document.getElementById('file-upload-input');
+    const uploadIcon = document.getElementById('upload-icon');
+    const uploadText = document.getElementById('upload-text');
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const dropArea = document.getElementById('document-upload-form');
-        const fileInput = document.getElementById('file-upload-input');
-        const uploadIcon = document.getElementById('upload-icon');
-        const uploadText = document.getElementById('upload-text');
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+    });
 
-        // 1. Clique no Input (acionado pelo Label)
-        fileInput.addEventListener('change', function() {
-            if (this.files.length > 0) {
-                // Altera o texto para mostrar que os arquivos foram selecionados
-                uploadText.textContent = `${this.files.length} file(s) selected. Click here to upload.`;
-                
-                // Envia o formulário automaticamente após a seleção
-                dropArea.submit(); 
-            }
-        });
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
 
-        // 2. Drag and Drop Handling (Impedir o comportamento padrão do navegador)
-        
-        // Impede o padrão (abrir o arquivo) para todos os eventos de arrastar na área
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, preventDefaults, false);
-        });
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false);
+    });
 
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false);
+    });
 
-        // Adicionar e remover estilo para feedback visual
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropArea.addEventListener(eventName, highlight, false);
-        });
+    function highlight() {
+        dropArea.classList.add('border-indigoDye', 'bg-indigoDye/10');
+        uploadIcon.classList.add('text-indigoDye');
+    }
 
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, unhighlight, false);
-        });
+    function unhighlight() {
+        dropArea.classList.remove('border-indigoDye', 'bg-indigoDye/10');
+        uploadIcon.classList.remove('text-indigoDye');
+    }
 
-        function highlight() {
-            dropArea.classList.add('border-indigoDye', 'bg-indigoDye/10');
-            uploadIcon.classList.add('text-indigoDye');
-        }
+    dropArea.addEventListener('drop', handleDrop, false);
 
-        function unhighlight() {
-            dropArea.classList.remove('border-indigoDye', 'bg-indigoDye/10');
-            uploadIcon.classList.remove('text-indigoDye');
-        }
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        fileInput.files = files;
+        dropArea.submit();
+    }
 
-        // 3. Lidar com o Drop de Arquivos
-        dropArea.addEventListener('drop', handleDrop, false);
-
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-
-            // Atribui os arquivos soltos ao input file
-            fileInput.files = files;
-
-            // Envia o formulário após soltar os arquivos
+    fileInput.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            uploadText.textContent = `${this.files.length} arquivo(s) selecionado(s).`;
             dropArea.submit();
         }
     });
+});
 </script>
-</main>
+@endsection

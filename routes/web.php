@@ -5,13 +5,13 @@ use Illuminate\Support\Facades\Route;
 // Controllers
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminController; // Mantido por precaução
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegisterTransactionController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\ReportController; // <<< Importação obrigatória
+use App\Http\Controllers\ReportController;
 
 // Rota da Home
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -41,22 +41,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/user/stock/{product}', [StockController::class, 'update'])->name('update.stock');
     Route::delete('/user/stock/{product}', [StockController::class, 'destroy'])->name('delete.stock');
 
+    // Tela de Documentos (NOVO - NO SEU PADRÃO)
+    Route::get('/user/documents', [DocumentController::class, 'index'])->name('documents.index');
+    Route::post('/user/documents', [DocumentController::class, 'store'])->name('documents.store');
+    Route::delete('/user/documents/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy'); // Rota de exclusão
 
-
-    // Rota Documentos
-    Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');
-    Route::post('/documents', [DocumentController::class, 'store'])->name('documents.store');
-
-    // Tela de Relatórios (CORRIGIDA)
-    Route::prefix('relatorios')->name('reports.')->group(function () {
-        Route::get('/', [ReportController::class, 'index'])->name('index');
-        Route::get('/gerar', [ReportController::class, 'generate'])->name('generate');
-
-        Route::POST('/baixar', [ReportController::class, 'download'])->name('download');
-        Route::post('/baixar', [ReportController::class, 'download'])->name('download');
-
-        Route::get('/visualizar/{id}', [ReportController::class, 'view'])->name('view');
-    });
+    // Tela de Relatórios (CORRIGIDA - NO SEU PADRÃO)
+    Route::get('/user/relatorios', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/user/relatorios/gerar', [ReportController::class, 'generate'])->name('reports.generate');
+    Route::get('/user/relatorios/baixar', [ReportController::class, 'download'])->name('reports.download'); // Corrigido para GET
+    Route::get('/user/relatorios/visualizar/{id}', [ReportController::class, 'view'])->name('reports.view');
 
     // Tela de Usuario
     Route::get('/user/userProfile', [UserController::class, 'showToUser'])->name('user.profile');
